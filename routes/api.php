@@ -48,23 +48,8 @@ Route::group(['middleware' => 'api'], function ($routes) {
 Route::middleware('admin')->group(function () {
     Route::prefix('admin/items')->group(function () {
         Route::get('/unapproved', [AdminItemController::class, 'unapprovedItems']);
-        Route::put('/{id}/approve', [AdminItemController::class, 'approveItem']);
-        Route::put('/{id}/reject', [AdminItemController::class, 'rejectItem']);
-        Route::delete('/{id}', [AdminItemController::class, 'destroy']);
     });
 });
 
 
-// Route::get('/send-test-email', function () {
-//     Mail::raw('This is a test email using Gmail SMTP server.', function ($message) {
-//         $message->to('softeng.kaziomar@gmail.com')  
-//                 ->subject('Test Email from Laravel');
-//     });
 
-//     return 'Email sent successfully';
-// });
-
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
