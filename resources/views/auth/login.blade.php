@@ -44,7 +44,7 @@
           </div>
         </form>
         <p class="mb-1">
-          <a href="forgot-password.html">I forgot my password</a>
+          <a href="{{route('auth.forgerPass')}}">I forgot my password</a>
         </p>
         <p class="mb-0">
           <a href="{{url('api/register')}}" class="text-center">Register a new membership</a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PasswordReset;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,7 +16,14 @@ class UserAuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', [
+            'except' => [
+                'login',
+                'register',
+                'forgetPassword',
+                'forgetPassView'
+            ]
+        ]);
     }
     public function register(Request $request)
     {
@@ -79,6 +87,9 @@ class UserAuthController extends Controller
     }
 
 
+
+
+
     //logout
     public function logout()
     {
@@ -96,7 +107,8 @@ class UserAuthController extends Controller
         }
     }
 
-    public function profileData(){
+    public function profileData()
+    {
         return view('profile');
     }
 
@@ -117,4 +129,7 @@ class UserAuthController extends Controller
             ]);
         }
     }
+
+
+    
 }

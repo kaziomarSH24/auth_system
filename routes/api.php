@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminItemController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Http\Request;
@@ -20,6 +21,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/forget-password', [PasswordResetController::class, 'forgetPassword']);
+Route::get('/forget-password', function () {
+    return view('auth.forger-password');
+})->name('auth.forgerPass');
+
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
 
 Route::group(['middleware' => 'api'], function ($routes) {
     Route::get('/register', function () {
@@ -32,7 +39,7 @@ Route::group(['middleware' => 'api'], function ($routes) {
     Route::post('/login', [UserAuthController::class, 'login']);
     Route::get('/logout', [UserAuthController::class, 'logout']);
     Route::get('/profile', [UserAuthController::class, 'profile'])->name("profile");
-    Route::get('/email/verify',function(){
+    Route::get('/email/verify', function () {
         return view('auth.emailVerify');
     });
 
@@ -50,6 +57,3 @@ Route::middleware('admin')->group(function () {
         Route::get('/unapproved', [AdminItemController::class, 'unapprovedItems']);
     });
 });
-
-
-

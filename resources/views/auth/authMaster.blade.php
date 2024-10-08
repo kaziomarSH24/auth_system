@@ -18,9 +18,10 @@
   
   <script>
     let _uri = window.location.hostname;
+    let _pathname = window.location.pathname;
     let token = localStorage.getItem('user_token');
   
-    if(window.location.pathname=="/api/login" || window.location.pathname == "/api/register"){
+    if(_pathname=="/api/login" || _pathname == "/api/register" || _pathname == "/api/forget-password" || _pathname == '/reset-password'){
         
         if(token != null){
             window.location.href = '/profile/data'; 
