@@ -3,7 +3,7 @@
 @section('auth')
 <div class="login-box">
   <div class="login-logo">
-    <a href="javascript:void(0)"><b>Admin</b>LTE</a>
+    <a href="javascript:void(0)"><b>{{config('app.name')}}</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
