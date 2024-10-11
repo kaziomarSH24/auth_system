@@ -3,7 +3,7 @@
   <a href="index3.html" class="brand-link">
     <img src="{{asset('backend')}}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
       class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
   </a>
 
   <!-- Sidebar -->
@@ -36,20 +36,11 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item menu-open">
-          <a href="{{route('user.dashboard')}}"
-            class="nav-link {{request()->routeIs('user.dashboard') ? 'active': ''}}">
-            <i class="nav-icon fas fa-user"></i>
+          <a href="{{route('admin.dashboard')}}"
+            class="nav-link {{request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
-              User Profile
-            </p>
-          </a>
-        </li>
-        <li class="nav-item menu-open">
-          <a href="{{route('user.post.item')}}"
-            class="nav-link {{request()->routeIs('user.post.item') ? 'active' : ''}}">
-            <i class="nav-icon fas fa-book"></i>
-            <p>
-              User Post Item
+              Dashboard
             </p>
           </a>
         </li>
@@ -62,6 +53,22 @@
             </p>
           </a>
         </li> --}}
+        <li class="nav-item menu-open">
+          <a href="{{route('all.users')}}" class="nav-link {{ request()->routeIs('all.users') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-users"></i>
+            <p>
+              All Users
+            </p>
+          </a>
+        </li>
+        <li class="nav-item menu-open">
+          <a href="{{route('post.items')}}" class="nav-link {{ request()->routeIs('post.items') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+              Post Items
+            </p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

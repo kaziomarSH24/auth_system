@@ -8,8 +8,6 @@
       {{ session('success') }}
   </div>
 @endif
-
-
   <div class=".verify container-fluid">
       <div class="row">
         <div class="card card-widget widget-user-2 shadow-sm">
@@ -20,7 +18,7 @@
               </div>
               <!-- /.widget-user-image -->
               <h3 class="userName widget-user-username"></h3>
-              <h5 class="widget-user-desc">Web Developer</h5>
+              <h5 class="userRole widget-user-desc">User</h5>
             </div>
             <div class="card-footer p-0">
               <ul class="nav flex-column">
@@ -55,35 +53,34 @@
     
   </div>
 @endsection
+
 @push('js')
 <script>
-    $(document).ready(function(){
-      let _token = 'Bearer ' + localStorage.getItem('user_token');
-        $.ajax({
-                url:"http://127.0.0.1:8000/api/profile",
-                type:"GET",
-                headers: {'Authorization' : _token },
-                success:function(response){
-                    if(response.success == true){
-                      console.log(response);
-                      
-                      $('.userName').text(response.data.name)
-                       
-                    }else {
-
-                    }
-                    
-                }
-            });
-
-            
-
-        let successMessage = $('#success-message');
-        if (successMessage.length) {
-            setTimeout(function() {
-                successMessage.fadeOut(); 
-            }, 2000);
-        }
-    })
-  </script>
+  $(document).ready(function(){
+    let _token = 'Bearer ' + localStorage.getItem('user_token');
+      $.ajax({
+              url:"http://127.0.0.1:8000/api/profile",
+              type:"GET",
+              headers: {'Authorization' : _token },
+              success:function(response){
+                console.log(response.data.role);
+                  if(response.success == true){
+                    console.log(response);
+                    $('.userName').text(response.data.name)
+                    $('.userRole').text(response.data.role)
+                   }
+                  else {
+                    $('.userName').text('User')
+                  }
+                  
+              }
+          });
+      let successMessage = $('#success-message');
+      if (successMessage.length) {
+          setTimeout(function() {
+              successMessage.fadeOut(); 
+          }, 2000);
+      }
+  })
+</script>
 @endpush

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserRegistered;
 use App\Models\PasswordReset;
 use App\Models\User;
 use Carbon\Carbon;
@@ -44,6 +45,10 @@ class UserAuthController extends Controller
             'role' => 'user',
         ]);
 
+        //event fire
+        event(new UserRegistered($user));
+
+
         // $this->sentVerifyMail($request->email);
         return response()->json([
             'success' => true,
@@ -82,7 +87,7 @@ class UserAuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user(),
-            'redirect' => route('profile.data')
+            'redirect' => route('user.dashboard')
         ]);
     }
 
@@ -129,7 +134,4 @@ class UserAuthController extends Controller
             ]);
         }
     }
-
-
-    
 }

@@ -70,7 +70,7 @@ class VerificationController extends Controller
             $user->save();
 
 
-            return redirect()->route('profile.data')->with('success', 'Email verified successfully.');
+            return redirect()->route('user.dashboard')->with('success', 'Email verified successfully.');
         } else {
             return view('404');
         }

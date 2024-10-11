@@ -77,7 +77,8 @@ class PasswordResetController extends Controller
         if (isset($request->token)) {
             $resetData = PasswordReset::where('token', $request->token)->first();
             if ($resetData) {
-                $user = User::where('email', $resetData->email)->first();
+                $user = User::where('email',$resetData->email )->first();
+                // dd($user);
                 return view('auth.reset-password', compact('user'));
             } else {
                 return view('auth.404');
@@ -96,16 +97,20 @@ class PasswordResetController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
+
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
-        $user = User::find($request->id);
-        $user->password = Hash::make($request->password);
-        $user->save();
 
-        PasswordReset::where('email',$user->email)->delete();
-    
-        return response()->json(['success'=> true, 'msg' => 'Password reset successfully'], 200);
+        $user = User::find($request->id);
+        if ($user) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+            $del = PasswordReset::where('email', $user->email)->delete();
+            return response()->json(['success' => true, 'msg' => 'Password reset successfully']);
+        } else {
+            return response()->json(['success' => false, 'msg' => 'User not found!']);
+        }
     }
 }

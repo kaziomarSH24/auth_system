@@ -1,6 +1,7 @@
 @extends('auth.authMaster')
 
 @section('auth')
+{{-- @dd($user) --}}
 <div class="login-box">
     <div class="login-logo">
       <a href="javascript:void(0)"><b>Admin</b>LTE</a>
@@ -51,24 +52,23 @@
     <script>
       $(document).ready(function(){
         $("#reset-form").submit(function(e){
-          e.preventDefault()
+          e.preventDefault();
           $("#msg").empty();
           let pass = $('#pass').val();
           let cpass = $('#cpass').val();
           let _token = $('#token').val();
-          let id = {{$user->id}};
-            console.log(_token);
-            
+          let id = {{$user->id}};   
           $.ajax({
             url: 'http://127.0.0.1:8000/reset-password',
             type:'POST',
             data: {
-              "_token": _token,
+              _token: _token,
               id: id,
               password: pass,
               password_confirmation: cpass
             },
             success:function(response){
+              console.log(response.id);
               
               if(response.success == true){
                 toastr.success(response.msg);

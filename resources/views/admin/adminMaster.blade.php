@@ -1,9 +1,8 @@
 <script>
   let _role = localStorage.getItem('user_role');
-   if(_role && _role == 'admin'){
-    window.location.href = '/admin/dashboard';
-
-   }
+  if(_role && _role == 'user'){
+   window.location.href = '/user/dashboard';
+  }
 </script>
 
 <!DOCTYPE html>
@@ -32,15 +31,16 @@
     if(window.location.pathname=="/api/login" || window.location.pathname == "/api/register"){
         
         if(token != null){
-            window.location.href = '/user/dashboard'; 
+            window.location.href = '/api/admin/dashboard'; 
         }
     }else{
         if(token == null){
             window.location.href = '/api/login'; 
         }
     }
+  
+    
   </script>
-
   @stack('style')
 </head>
 
@@ -48,24 +48,20 @@
   <div class="wrapper">
 
     <!-- Navbar -->
-    @include('layouts.partials.navbar')
+    @include('admin.partials.navbar')
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
 
-    @include('layouts.partials.aside')
+    @include('admin.partials.aside')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
 
-      <!-- /.content-header -->
+      @yield('ad-content')
 
-      <!-- Main content -->
-      @yield('content')
-      <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -79,18 +75,17 @@
 
     <!-- Main Footer -->
     <footer class="main-footer">
-      <!-- To the right -->
-      <div class="float-right d-none d-sm-inline">
-        Anything you want
+      <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.1.0
       </div>
-      <!-- Default to the left -->
-      <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+      <strong>Copyright © 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
     </footer>
   </div>
   <!-- ./wrapper -->
 
   <!-- REQUIRED SCRIPTS -->
 
+  <!-- jQuery -->
   <script src="{{asset('backend')}}/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="{{asset('backend')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -98,13 +93,52 @@
   <script src="{{asset('backend')}}/dist/js/adminlte.min.js"></script>
   <!--Toastr-->
   <script src="{{asset('backend')}}/plugins/toastr/toastr.min.js"></script>
+
   <script>
     $(document).ready(function(){
       let tabText = $('.nav-item a.active p').text().trim();
       $('.brcText').text(tabText);
     })
   </script>
+
+  <script>
+    $(document).ready(function(){
+    let _token = 'Bearer ' + localStorage.getItem('user_token');
+      $.ajax({
+              url:"http://127.0.0.1:8000/api/profile",
+              type:"GET",
+              headers: {'Authorization' : _token },
+              success:function(response){
+                  console.log(response.data.role);
+                  
+                  if(response.success == true){
+                    if(response.data.role == 'user'){
+                    window.location.href = '/user/dashboard'; 
+                   }else{
+                    console.log(response);
+                    $('.userName').text(response.data.name)
+                   }
+                    
+                  }else {
+
+                  }
+                  
+              }
+          });
+
+          
+
+      let successMessage = $('#success-message');
+      if (successMessage.length) {
+          setTimeout(function() {
+              successMessage.fadeOut(); 
+          }, 2000);
+      }
+  })
+  </script>
   @stack('js')
+
+
 </body>
 
 </html>

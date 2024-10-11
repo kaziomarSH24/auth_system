@@ -6,6 +6,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Exception;
+use Tymon\JWTAuth\Exceptions\JWTException;
+
 
 class AdminMiddleware
 {
@@ -16,10 +20,11 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+
         if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }
 
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }
