@@ -20,7 +20,7 @@ class ItemSeeder extends Seeder
             Item::create([
                 'title' => $faker->sentence, 
                 'description' => $faker->paragraph,
-                'user_id' => rand(1, 10),
+                'user_id' => rand(1, 2),
                 'status' => $faker->randomElement(['pending', 'approved', 'rejected']),
                 'created_at' => now(),
                 'updated_at' => now(),
