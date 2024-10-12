@@ -93,6 +93,26 @@
   <script src="{{asset('backend')}}/dist/js/adminlte.min.js"></script>
   <!--Toastr-->
   <script src="{{asset('backend')}}/plugins/toastr/toastr.min.js"></script>
+  <!--pusher-->
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  
+  <script>
+   
+      Pusher.logToConsole = true;
+  
+      var pusher = new Pusher('dc510a09d5a66c2d6061', {
+        cluster: 'ap2'
+      });
+  
+      var channel = pusher.subscribe('UserRegistered');
+      channel.bind('user.registered', function(data) {
+        toastr.success(`New user registered:  ${data.user.name} (${data.user.email}) at ${data.formattedTime}`);
+        let count = parseInt($('#userCount').text()) + 1;
+        $('#userCount').text(count);
+        console.log(data);
+        
+      });
+  </script>
 
   <script>
     $(document).ready(function(){

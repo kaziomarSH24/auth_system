@@ -10,7 +10,7 @@
   <!-- Content Header (Page header) -->
   <div class="content-header">
     <div class="container-fluid">
-      
+
       @include('admin.partials.breadcrumb')
 
       <div class="row">
@@ -84,29 +84,8 @@
   </div>
 </div>
 @endsection
+
 @push('style')
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-@endpush
-
-@push('js')
-
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-<script>
-  // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('dc510a09d5a66c2d6061', {
-      cluster: 'ap2'
-    });
-
-    var channel = pusher.subscribe('UserRegistered');
-    channel.bind('user.registered', function(data) {
-      toastr.success(`New user registered:  ${data.user.name} (${data.user.email}) at ${data.formattedTime}`);
-      let count = parseInt($('#userCount').text()) + 1;
-      $('#userCount').text(count);
-      console.log(data);
-      
-    });
-</script>
 @endpush

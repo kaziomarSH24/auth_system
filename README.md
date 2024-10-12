@@ -7,60 +7,121 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Laravel JWT Authentication System with Real-time Notifications using Pusher
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project implements a JWT-based authentication system with Laravel. It also uses Pusher for real-time notifications when a new user registers. Additionally, it includes a seeder to create an initial admin and user, along with email verification, forgot password functionality, and time zone configuration.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2
+- Laravel 10
+- Composer
+- MySQL
+- Node.js & npm
+- Pusher account (for real-time notifications)
 
-## Learning Laravel
+## Installation Steps
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Clone the repository
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+git clone https://github.com/kaziomarSH24/auth_system.git
+cd auth_system
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Install Composer
+composer install
 
-## Laravel Sponsors
+### 3. Create the .env file
+cp .env.example .env
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Update the .env file with the following:
 
-## Contributing
+##Database configuration:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+##Pusher configuration:
 
-## Security Vulnerabilities
+PUSHER_APP_ID=your_pusher_app_id
+PUSHER_APP_KEY=your_pusher_app_key
+PUSHER_APP_SECRET=your_pusher_app_secret
+PUSHER_APP_CLUSTER=your_pusher_app_cluster
+BROADCAST_DRIVER=pusher
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+##Email configuration:
+Make sure to configure your email service for sending verification and password reset emails.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=your-email@example.com
+MAIL_FROM_NAME="${APP_NAME}"
+
+##Time zone configuration:
+Set the application's time zone to Asia/Dhaka in your .env or config/app.php:
+
+APP_TIMEZONE=Asia/Dhaka
+
+### 4. Generate APP key
+php artisan key:generate
+
+### 5. Set up JWT secret key
+php artisan jwt:secret
+
+### 6. Run database migrations
+php artisan migrate
+
+### 7.Seed the database
+```console
+php artisan db:seed
+```
+
+This will create two users:
+
+<ul>
+    <li>Admin: `admin@admin.com`, password: 12345678</li>
+    <li>User: `user@user.com`, password: 12345678</li>
+</ul>
+
+### 8. Email Verification & Password Reset
+
+New users will receive a verification email after registration.
+Users can request a password reset link through their registered email.
+
+Make sure to queue email verification and password reset emails by configuring your mail driver properly.
+
+### 10. Run the application
+php artisan serve
+
+
+# Usage Instructions
+    *Users can register, verify their email, and login using JWT-based authentication.
+    *Real-time admin notifications are sent via Pusher when a new user registers.
+    *Forgot password functionality is available with email-based password reset.
+    *Admins can view notifications without refreshing the page.
+
+# Endpoints
+
+User registration: /api/register
+User login: /api/login
+Forgot password: /api/forget-password
+Reset password: /api/reset-password
+
+
+# Additional Information
+
+For JWT token-based authentication, make sure to include the token in the Authorization header as Bearer <token>.
+You can check real-time notifications in the admin dashboard when new users register.
+The application’s time zone is set to Asia/Dhaka.
+Pusher is used for broadcasting real-time notifications with BROADCAST_DRIVER=pusher.
