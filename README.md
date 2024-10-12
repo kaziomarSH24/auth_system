@@ -24,41 +24,48 @@ This project implements a JWT-based authentication system with Laravel. It also 
 
 ### 1. Clone the repository
 
+```console
 git clone https://github.com/kaziomarSH24/auth_system.git
 cd auth_system
+```
 
 ### 2. Install Composer
+```console
 composer install
+```
 
 ### 3. Create the .env file
+```console
 cp .env.example .env
+```
 
 
 
-Update the .env file with the following:
 
-##Database configuration:
-
+Update the `.env` file with the following:
+#### Database configuration:
+```bash
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=your_database
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
+```
 
 
-##Pusher configuration:
-
+#### Pusher configuration:
+```bash
 PUSHER_APP_ID=your_pusher_app_id
 PUSHER_APP_KEY=your_pusher_app_key
 PUSHER_APP_SECRET=your_pusher_app_secret
 PUSHER_APP_CLUSTER=your_pusher_app_cluster
 BROADCAST_DRIVER=pusher
+```
 
-
-##Email configuration:
+##### Email configuration:
 Make sure to configure your email service for sending verification and password reset emails.
-
+```bash
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.mailtrap.io
 MAIL_PORT=2525
@@ -67,20 +74,26 @@ MAIL_PASSWORD=your_mailtrap_password
 MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS=your-email@example.com
 MAIL_FROM_NAME="${APP_NAME}"
-
-##Time zone configuration:
-Set the application's time zone to Asia/Dhaka in your .env or config/app.php:
-
+```
+##### Time zone configuration:
+Set the application's time zone to `Asia/Dhaka` in your `.env` or `config/app.php`:
+```bash
 APP_TIMEZONE=Asia/Dhaka
+```
 
 ### 4. Generate APP key
+```console
 php artisan key:generate
+```
 
 ### 5. Set up JWT secret key
+```console
 php artisan jwt:secret
-
+```
 ### 6. Run database migrations
+```console
 php artisan migrate
+```
 
 ### 7.Seed the database
 ```console
@@ -89,39 +102,39 @@ php artisan db:seed
 
 This will create two users:
 
-<ul>
-    <li>Admin: `admin@admin.com`, password: 12345678</li>
-    <li>User: `user@user.com`, password: 12345678</li>
-</ul>
+- **Admin**: `admin@admin.com`, password: `12345678`
+- **User**: `user@user.com`, password: `12345678`
 
 ### 8. Email Verification & Password Reset
 
-New users will receive a verification email after registration.
-Users can request a password reset link through their registered email.
+- New users will receive a verification email after registration.
+- Users can request a password reset link through their registered email.
 
 Make sure to queue email verification and password reset emails by configuring your mail driver properly.
 
 ### 10. Run the application
+```console
 php artisan serve
+```
 
 
 # Usage Instructions
-    *Users can register, verify their email, and login using JWT-based authentication.
-    *Real-time admin notifications are sent via Pusher when a new user registers.
-    *Forgot password functionality is available with email-based password reset.
-    *Admins can view notifications without refreshing the page.
+- Users can register, verify their email, and login using JWT-based authentication.
+- Real-time admin notifications are sent via Pusher when a new user registers.
+- Forgot password functionality is available with email-based password reset.
+- Admins can view notifications without refreshing the page.
 
 # Endpoints
 
-User registration: /api/register
-User login: /api/login
-Forgot password: /api/forget-password
-Reset password: /api/reset-password
+- User registration: `/api/register`
+- User login: `/api/login`
+- Forgot password: `/api/forget-password`
+- Reset password: `/api/reset-password`
 
 
 # Additional Information
 
-For JWT token-based authentication, make sure to include the token in the Authorization header as Bearer <token>.
-You can check real-time notifications in the admin dashboard when new users register.
-The application’s time zone is set to Asia/Dhaka.
-Pusher is used for broadcasting real-time notifications with BROADCAST_DRIVER=pusher.
+- For JWT token-based authentication, make sure to include the token in the `Authorization` header as `Bearer <token>`.
+- You can check real-time notifications in the admin dashboard when new users register.
+- The application’s time zone is set to `Asia/Dhaka`.
+- Pusher is used for broadcasting real-time notifications with `BROADCAST_DRIVER=pusher`.
