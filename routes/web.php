@@ -18,6 +18,9 @@ Route::prefix('/user')->group(function () {
     Route::get('/post-items', function () {
         return view('layouts.user-post-item');
     })->name("user.post.item");
+    Route::get('/chat', function () {
+        return view('layouts.chat');
+    })->name("user.chat");
 });
 
 

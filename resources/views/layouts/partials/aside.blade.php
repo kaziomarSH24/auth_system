@@ -53,6 +53,15 @@
             </p>
           </a>
         </li>
+        <li class="nav-item menu-open">
+          <a href="{{route('user.chat')}}"
+            class="nav-link {{request()->routeIs('user.chat') ? 'active' : ''}}">
+            <i class="nav-icon fas fa-comments"></i>
+            <p>
+             chat
+            </p>
+          </a>
+        </li>
         {{-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>

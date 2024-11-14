@@ -28,6 +28,9 @@
             <div class="row ">
               <div class="col-md-6">
                 <button data-id type="button" class="verify_mail btn btn-outline-primary btn-inline"><i class="fa fa-envelope"></i> Send a verification email</button>
+                <div id="loading" style="display: none;">
+                  <i class="fa fa-spinner fa-spin"></i> Sending...
+                </div>
                 
               </div>
               <div class="col-md-3"></div>
@@ -47,6 +50,28 @@
 @push('js')
     <script>
         $(document).ready(function(){
+        
+        $(document).ajaxStart(function(){
+            $("#loading").css("display", "block");
+            $(".verify_mail").css("display", "none");
+        }).ajaxStop(function(){
+            $("#loading").css("display", "none");
+            setTimeout(function() {
+              $(".verify_mail").css("display", "block");
+            }, 30000);
+
+            let timer = 30;
+            let interval = setInterval(function() {
+              timer--;
+              $("#loading").css("display", "block");
+              if (timer <= 0) {
+                clearInterval(interval);
+                $("#loading").css("display", "none");
+              }
+              
+              $("#loading").html('<i class="fa fa-spinner fa-spin"></i> Resend... (' + timer + 's)');
+            }, 1000);
+        });
             //email verifaction
             let _token = 'Bearer ' + localStorage.getItem('user_token');
             $(document).on('click','.verify_mail',function(){

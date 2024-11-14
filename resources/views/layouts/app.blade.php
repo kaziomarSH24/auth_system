@@ -98,10 +98,20 @@
   <script src="{{asset('backend')}}/dist/js/adminlte.min.js"></script>
   <!--Toastr-->
   <script src="{{asset('backend')}}/plugins/toastr/toastr.min.js"></script>
+  <!-- socket.io -->
+  <script src="https://cdn.socket.io/4.8.0/socket.io.min.js" integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd" crossorigin="anonymous"></script>
+
+
+ 
+
+
+  <!-- Custom Script -->
+
   <script>
     $(document).ready(function(){
       let tabText = $('.nav-item a.active p').text().trim();
       $('.brcText').text(tabText);
+
     })
   </script>
   @stack('js')

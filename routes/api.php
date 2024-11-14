@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminItemController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\UserAuthController;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/index',[ItemController::class,'showApprovePost'])->name('item.indexPage');
+// Route::get('/index',[ItemController::class,'showApprovePost'])->name('item.indexPage');
 
 Route::post('/forget-password', [PasswordResetController::class, 'forgetPassword']);
 Route::get('/forget-password', function () {
@@ -57,13 +58,19 @@ Route::group(['middleware' => 'api', 'jwt.auth'], function ($routes) {
     Route::get('/items/{id}', [ItemController::class, 'singleItem']);
     Route::put('/items/{id}', [ItemController::class, 'update']);
     Route::delete('/items/{id}', [ItemController::class, 'delete']);
+
+
+    //Conversation
+    Route::get('/conversation', [ConversationController::class, 'getContact']);
+    Route::get('/conversation/{id}', [ConversationController::class, 'getConversation']);
+    Route::post('/send-message', [ConversationController::class, 'sendMessage']);
 });
 
 
 
 //admin control
 Route::middleware(['jwt.auth', 'admin'])->group(function () {
-    Route::get('/admin/all-users', [AdminItemController::class, 'showUsers'])->name('all.users');
+    // Route::get('/admin/all-users', [AdminItemController::class, 'showUsers'])->name('all.users');
     Route::put('/admin/users/{id}/role', [AdminItemController::class, 'updateRole']);
     Route::prefix('admin/items')->group(function () {
         Route::get('/', [AdminItemController::class, 'getPosts']);
