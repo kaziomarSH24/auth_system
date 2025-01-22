@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('conversation_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->text('body');
+            $table->foreignId('conversation_id')->constrained('conversations')->onDelete('cascade');
+            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade');
+            $table->text('message');
+            $table->text('media')->nullable();
+            $table->enum('media_type', ['text', 'image', 'video', 'audio'])->default('text');
+            $table->enum('status', ['sent', 'delivered', 'read'])->default('sent');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

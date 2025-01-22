@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\VerificationController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -62,8 +63,10 @@ Route::group(['middleware' => 'api', 'jwt.auth'], function ($routes) {
 
     //Conversation
     Route::get('/conversation', [ConversationController::class, 'getContact']);
-    Route::get('/conversation/{id}', [ConversationController::class, 'getConversation']);
+    Route::get('/conversation/{id}', [ConversationController::class, 'getMessages']);
     Route::post('/send-message', [ConversationController::class, 'sendMessage']);
+    //mark as read
+    Route::put('/conversation/{id}', [ConversationController::class, 'markAsRead']);
 });
 
 
@@ -90,3 +93,20 @@ Route::middleware(['jwt.auth', 'admin'])->group(function () {
 //         return response()->json($request->user());
 //     });
 // });
+
+//socket user status update api
+Route::post('/update-status', function (Request $request) {
+    $user = User::find($request->userId);
+    if (!$user) {
+        return response()->json([
+            'success' => false,
+            'message' => 'User not found.'
+        ], 404);
+    }
+    $user->is_active = $request->is_active;
+    $user->save();
+    return response()->json([
+        'success' => true,
+        'message' => 'User status updated successfully.'
+    ]);
+});

@@ -86,8 +86,9 @@
 
                         localStorage.setItem("user_token",response.access_token)
                         localStorage.setItem("user_role", response.user.role);
+                        localStorage.setItem("user_id", response.user.id);
 
-                        console.log(response.user.role);
+                        console.log(response.user);
                         
                         if(response.user.email_verified_at == null){
                           toastr.warning("Logged in successfully. Please verify your email!");

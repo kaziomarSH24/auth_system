@@ -25,18 +25,26 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('backend')}}/dist/css/adminlte.min.css">
 
+  <script src="https://cdn.jsdelivr.net/npm/laravel-echo/dist/"></script>
+  {{-- <script src="{{ asset('js/echo.js') }}"></script> --}}
+  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+
+  {{-- @vite('resources/js/app.js') --}}
+
   <script>
+
+
     let _uri = window.location.hostname;
-    let token = localStorage.getItem('user_token');
-  
+    let _token = localStorage.getItem('user_token');
+
     if(window.location.pathname=="/api/login" || window.location.pathname == "/api/register"){
-        
-        if(token != null){
-            window.location.href = '/user/dashboard'; 
+
+        if(_token != null){
+            window.location.href = '/user/dashboard';
         }
     }else{
-        if(token == null){
-            window.location.href = '/api/login'; 
+        if(_token == null){
+            window.location.href = '/api/login';
         }
     }
   </script>
@@ -99,10 +107,10 @@
   <!--Toastr-->
   <script src="{{asset('backend')}}/plugins/toastr/toastr.min.js"></script>
   <!-- socket.io -->
-  <script src="https://cdn.socket.io/4.8.0/socket.io.min.js" integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd" crossorigin="anonymous"></script>
+  {{-- <script src="https://cdn.socket.io/4.8.0/socket.io.min.js" integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd" crossorigin="anonymous"></script> --}}
 
 
- 
+
 
 
   <!-- Custom Script -->
@@ -115,6 +123,7 @@
     })
   </script>
   @stack('js')
+  @stack('chat-js')
 </body>
 
 </html>
