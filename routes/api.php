@@ -66,7 +66,7 @@ Route::group(['middleware' => 'api', 'jwt.auth'], function ($routes) {
     Route::get('/conversation/{id}', [ConversationController::class, 'getMessages']);
     Route::post('/send-message', [ConversationController::class, 'sendMessage']);
     //mark as read
-    Route::put('/conversation/{id}', [ConversationController::class, 'markAsRead']);
+    Route::put('/markAsRead/{id}', [ConversationController::class, 'markAsRead']);
 });
 
 

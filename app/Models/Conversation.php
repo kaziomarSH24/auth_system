@@ -29,14 +29,14 @@ class Conversation extends Model
         return $this->belongsTo(User::class, 'user_two_id');
     }
 
-    // public function getMessages($perPage = 10)
-    // {
-    //     return $this->messages()->with('sender','receiver')->paginate($perPage);
-    // }
-    public function getMessages()
+    public function getMessages($perPage = 10)
     {
-        return $this->messages()->with('sender','receiver')->get();
+        return $this->messages()->with('sender', 'receiver')->orderBy('created_at', 'desc')->paginate($perPage);
     }
+    // public function getMessages()
+    // {
+    //     return $this->messages()->with('sender','receiver')->get();
+    // }
 
     public function getUnreadMessagesCount($userId)
     {

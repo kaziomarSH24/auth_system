@@ -82,11 +82,11 @@ class ConversationController extends Controller
      */
     public function getMessages(Request $request, $conversationId)
     {
-        // $perPage = $request->per_page ?? 10;
+        $perPage = $request->per_page ?? 10;
         $conversation = Conversation::findOrFail($conversationId);
         // return auth()->user();
-        // $messages = $conversation->getMessages($perPage);
-        $messages = $conversation->getMessages();
+        $messages = $conversation->getMessages($perPage);
+        // $messages = $conversation->getMessages();
 
         $messages->transform(function ($message) {
 
@@ -96,6 +96,9 @@ class ConversationController extends Controller
             $message->created_at_formatted = Carbon::parse($message->created_at)->format('d M, h:i a');
             return $message;
         });
+
+        //desc order
+        // $messages = $messages->sortByDesc('created_at');
 
         return response()->json([
             'success' => true,

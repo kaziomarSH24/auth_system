@@ -69,6 +69,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log(`User disconnected: ${socket.id}`);
         const userId = getKeyByValue(users, socket.id);
+        console.log('User ID:', userId);
         if (userId) {
             delete users[userId];
             console.log(`User ${userId} disconnected`);
