@@ -27,19 +27,19 @@
   <script>
     let _uri = window.location.hostname;
     let token = localStorage.getItem('user_token');
-  
+
     if(window.location.pathname=="/api/login" || window.location.pathname == "/api/register"){
-        
+
         if(token != null){
-            window.location.href = '/api/admin/dashboard'; 
+            window.location.href = '/api/admin/dashboard';
         }
     }else{
         if(token == null){
-            window.location.href = '/api/login'; 
+            window.location.href = '/api/login';
         }
     }
-  
-    
+
+
   </script>
   @stack('style')
 </head>
@@ -95,22 +95,22 @@
   <script src="{{asset('backend')}}/plugins/toastr/toastr.min.js"></script>
   <!--pusher-->
   <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-  
+
   <script>
-   
       Pusher.logToConsole = true;
-  
+
       var pusher = new Pusher('dc510a09d5a66c2d6061', {
         cluster: 'ap2'
       });
-  
+
       var channel = pusher.subscribe('UserRegistered');
       channel.bind('user.registered', function(data) {
+        console.log('hello');
         toastr.success(`New user registered:  ${data.user.name} (${data.user.email}) at ${data.formattedTime}`);
         let count = parseInt($('#userCount').text()) + 1;
         $('#userCount').text(count);
         console.log(data);
-        
+
       });
   </script>
 
@@ -130,28 +130,28 @@
               headers: {'Authorization' : _token },
               success:function(response){
                   console.log(response.data.role);
-                  
+
                   if(response.success == true){
                     if(response.data.role == 'user'){
-                    window.location.href = '/user/dashboard'; 
+                    window.location.href = '/user/dashboard';
                    }else{
                     console.log(response);
                     $('.userName').text(response.data.name)
                    }
-                    
+
                   }else {
 
                   }
-                  
+
               }
           });
 
-          
+
 
       let successMessage = $('#success-message');
       if (successMessage.length) {
           setTimeout(function() {
-              successMessage.fadeOut(); 
+              successMessage.fadeOut();
           }, 2000);
       }
   })

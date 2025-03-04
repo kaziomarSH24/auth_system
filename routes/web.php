@@ -5,6 +5,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\VerificationController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
@@ -53,4 +54,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/post-items', function () {
         return view('admin.post-items');
     })->name('post.items');
+});
+
+
+//create a callback route for testing
+
+Route::get('/abc/callback', function (Request $request) {
+    return response()->json([
+        'message' => 'callback route',
+        'data' => $request->all()
+]);
 });
